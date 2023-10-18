@@ -1,9 +1,14 @@
 # chat/urls.py
 
-from django.urls import path
-from .views import SendMessageView
+from django.urls import path, include
+from rest_framework.routers import SimpleRouter
+from .views import UserProfileViewSet, ChatModelViewSet, ChatNotificationViewSet
+
+router = SimpleRouter()
+router.register(r'user-profiles', UserProfileViewSet)
+router.register(r'chat-messages', ChatModelViewSet)
+router.register(r'chat-notifications', ChatNotificationViewSet)
 
 urlpatterns = [
-    path('send-message/<str:room_name>/', SendMessageView.as_view(), name='send-message'),
-    # Other URL patterns if you have more
+    path('', include(router.urls)),
 ]
